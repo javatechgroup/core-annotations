@@ -1,11 +1,13 @@
 package com.github.javatechgroup.core.annotations.monitoring.aspect;
 
-import com.github.javatechgroup.core.annotations.monitoring.MonitorPerformance;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.javatechgroup.core.annotations.monitoring.MonitorPerformance;
 
 /**
  * Aspect implementation for performance monitoring that intercepts methods
@@ -38,24 +40,21 @@ import org.springframework.stereotype.Component;
  * <b>Usage Example:</b>
  * </p>
  * 
- * <pre>
- * {
- * 	&#64;code
- * 	&#64;Service
- * 	public class UserService {
+ * <pre>{@code
+ * &#64;Service
+ * public class UserService {
  * 
- * 		&#64;MonitorPerformance(slowThreshold = 100, memoryThreshold = 10)
- * 		public User findUser(String userId) {
- * 			// Method implementation
- * 		}
+ * 	&#64;MonitorPerformance(slowThreshold = 100, memoryThreshold = 10)
+ * 	public User findUser(String userId) {
+ * 		// Method implementation
+ * 	}
  * 
- * 		@MonitorPerformance(trackExceptions = false, logLevel = LogLevel.DEBUG)
- * 		public void quickOperation() {
- * 			// Fast operation that doesn't need exception logging
- * 		}
+ * 	&#64;MonitorPerformance(trackExceptions = false, logLevel = MonitorPerformance.LogLevel.DEBUG)
+ * 	public void quickOperation() {
+ * 		// Fast operation that doesn't need exception logging
  * 	}
  * }
- * </pre>
+ * }</pre>
  *
  * <p>
  * <b>Log Output Examples:</b>
@@ -63,7 +62,7 @@ import org.springframework.stereotype.Component;
  * 
  * <pre>
  * UserService.findUser | Time: 85ms | Memory: 8MB | Success: true
- * ReportService.generate | Time: 150ms | Memory: 15MB | Success: true | ⚠️ SLOW (threshold: 100ms)
+ * ReportService.generate | Time: 150ms | Memory: 15MB | Success: true | SLOW (threshold: 100ms)
  * PaymentService.process | Time: 25ms | Memory: 2MB | Success: false | Exception: PaymentFailedException: Insufficient funds
  * </pre>
  *
@@ -71,10 +70,19 @@ import org.springframework.stereotype.Component;
  * @see MonitorPerformance
  * @since 1.0.0
  */
-@Slf4j
 @Aspect
 @Component
 public class PerformanceMonitoringAspect {
+
+	private static final Logger log = LoggerFactory.getLogger(PerformanceMonitoringAspect.class);
+
+	/**
+	 * Default constructor for PerformanceMonitoringAspect. Creates a new instance
+	 * of the performance monitoring aspect.
+	 */
+	public PerformanceMonitoringAspect() {
+		// Default constructor
+	}
 
 	/**
 	 * Around advice that intercepts method execution for performance monitoring.
@@ -110,6 +118,16 @@ public class PerformanceMonitoringAspect {
 	 * measurements</li>
 	 * </ul>
 	 *
+	 * <p>
+	 * <b>Example:</b>
+	 * </p>
+	 * 
+	 * <pre>{@code
+	 * // When a method is annotated with @MonitorPerformance(slowThreshold = 100)
+	 * // and takes 150ms to execute, the aspect will log:
+	 * // "UserService.slowMethod | Time: 150ms | Memory: 5MB | Success: true | SLOW (threshold: 100ms)"
+	 * }</pre>
+	 *
 	 * @param joinPoint the proceeding join point representing the intercepted
 	 *                  method execution
 	 * @param config    the {@link MonitorPerformance} annotation configuration from
@@ -117,14 +135,6 @@ public class PerformanceMonitoringAspect {
 	 * @return the result of the method execution, passed through unchanged
 	 * @throws Throwable any exception thrown by the intercepted method, rethrown
 	 *                   after logging
-	 *
-	 * @example
-	 * 
-	 *          <pre>{@code
-	 * // When a method is annotated with @MonitorPerformance(slowThreshold = 100)
-	 * // and takes 150ms to execute, the aspect will log:
-	 * // "UserService.slowMethod | Time: 150ms | Memory: 5MB | Success: true | ⚠️ SLOW (threshold: 100ms)"
-	 * }</pre>
 	 *
 	 * @see ProceedingJoinPoint
 	 * @see MonitorPerformance
@@ -265,10 +275,10 @@ public class PerformanceMonitoringAspect {
 		boolean isHighMemory = config.trackMemory() && memoryUsedMB > config.memoryThreshold();
 
 		if (isSlow) {
-			message.append(" | ⚠️ SLOW (threshold: ").append(config.slowThreshold()).append("ms)");
+			message.append(" | SLOW (threshold: ").append(config.slowThreshold()).append("ms)");
 		}
 		if (isHighMemory) {
-			message.append(" | 💾 HIGH_MEMORY (threshold: ").append(config.memoryThreshold()).append("MB)");
+			message.append(" | HIGH_MEMORY (threshold: ").append(config.memoryThreshold()).append("MB)");
 		}
 
 		// Log with appropriate level
@@ -323,10 +333,16 @@ public class PerformanceMonitoringAspect {
 			log.warn(message);
 		} else {
 			switch (config.logLevel()) {
-			case DEBUG -> log.debug(message);
-			case WARN -> log.warn(message);
-			case INFO -> log.info(message);
-			default -> log.info(message);
+			case DEBUG:
+				log.debug(message);
+				break;
+			case WARN:
+				log.warn(message);
+				break;
+			case INFO:
+			default:
+				log.info(message);
+				break;
 			}
 		}
 	}

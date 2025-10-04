@@ -19,15 +19,15 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <pre>{@code
- * @Service
+ * &#64;Service
  * public class UserService {
  * 
- * 	@MonitorPerformance(slowThreshold = 500, memoryThreshold = 50, logLevel = MonitorPerformance.LogLevel.INFO)
- * 	public List<User> getUsers() {
+ * 	&#64;MonitorPerformance(slowThreshold = 500, memoryThreshold = 50, logLevel = MonitorPerformance.LogLevel.INFO)
+ * 	public List&lt;User&gt; getUsers() {
  * 		return userRepository.findAll();
  * 	}
  * 
- * 	@MonitorPerformance(trackMemory = false, logExceptions = false)
+ * 	&#64;MonitorPerformance(trackMemory = false, logExceptions = false)
  * 	public User getUserById(Long id) {
  * 		return userRepository.findById(id).orElse(null);
  * 	}
@@ -55,8 +55,11 @@ public @interface MonitorPerformance {
 	 * Enable or disable execution time tracking. When enabled, the method execution
 	 * time will be measured and logged.
 	 * 
+	 * <p>
+	 * Default: {@code true}
+	 * </p>
+	 * 
 	 * @return true to track execution time, false to disable
-	 * @default true
 	 */
 	boolean trackTime() default true;
 
@@ -64,8 +67,11 @@ public @interface MonitorPerformance {
 	 * Enable or disable memory usage tracking. When enabled, the memory usage
 	 * difference before and after method execution will be calculated and logged.
 	 * 
+	 * <p>
+	 * Default: {@code true}
+	 * </p>
+	 * 
 	 * @return true to track memory usage, false to disable
-	 * @default true
 	 */
 	boolean trackMemory() default true;
 
@@ -73,8 +79,11 @@ public @interface MonitorPerformance {
 	 * Enable or disable exception tracking. When enabled, any exceptions thrown by
 	 * the method will be captured and logged.
 	 * 
+	 * <p>
+	 * Default: {@code true}
+	 * </p>
+	 * 
 	 * @return true to track exceptions, false to disable
-	 * @default true
 	 */
 	boolean trackExceptions() default true;
 
@@ -83,8 +92,11 @@ public @interface MonitorPerformance {
 	 * exceeds this value, a "SLOW" alert will be added to the log. Set to -1 to
 	 * disable slow execution detection.
 	 * 
+	 * <p>
+	 * Default: {@code 1000}
+	 * </p>
+	 * 
 	 * @return slow threshold in milliseconds
-	 * @default 1000
 	 */
 	long slowThreshold() default 1000;
 
@@ -93,8 +105,11 @@ public @interface MonitorPerformance {
 	 * exceeds this value, a "HIGH_MEMORY" alert will be added to the log. Set to -1
 	 * to disable high memory usage detection.
 	 * 
+	 * <p>
+	 * Default: {@code 100}
+	 * </p>
+	 * 
 	 * @return memory threshold in megabytes
-	 * @default 100
 	 */
 	long memoryThreshold() default 100;
 
@@ -103,8 +118,11 @@ public @interface MonitorPerformance {
 	 * tracked but not logged. Useful for expected exceptions that shouldn't clutter
 	 * the logs.
 	 * 
+	 * <p>
+	 * Default: {@code true}
+	 * </p>
+	 * 
 	 * @return true to log exceptions, false to suppress exception logging
-	 * @default true
 	 */
 	boolean logExceptions() default true;
 
@@ -113,8 +131,11 @@ public @interface MonitorPerformance {
 	 * stack trace will be logged along with the exception message. When disabled,
 	 * only the exception type and message will be logged.
 	 * 
+	 * <p>
+	 * Default: {@code false}
+	 * </p>
+	 * 
 	 * @return true to log full stack traces, false to log only exception details
-	 * @default false
 	 */
 	boolean logStackTrace() default false;
 
@@ -122,8 +143,11 @@ public @interface MonitorPerformance {
 	 * Logging level for performance metrics output. Determines at which log level
 	 * the performance metrics will be reported.
 	 * 
+	 * <p>
+	 * Default: {@link LogLevel#INFO}
+	 * </p>
+	 * 
 	 * @return the logging level for performance output
-	 * @default INFO
 	 * @see LogLevel
 	 */
 	LogLevel logLevel() default LogLevel.INFO;

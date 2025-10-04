@@ -20,6 +20,7 @@
 		<mockito.version>5.20.0</mockito.version>
 		<spring-boot.version>3.5.6</spring-boot.version>
 		<lombok.version>1.18.42</lombok.version>
+		<slf4j.version>2.0.17</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -44,18 +45,24 @@
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
 		<!-- Unit testing -->
 		<dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <version>${spring-boot.version}</version>
-        <scope>test</scope>
-    </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${spring-boot.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-			<!-- Compiler plugin -->
+			<!-- Compiler plugin with Java 21 support -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -64,12 +71,12 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<compilerArgs>
-						<arg>-parameters</arg>
+						<arg>-parameters</arg> <!-- Useful for reflection -->
 					</compilerArgs>
 				</configuration>
 			</plugin>
 
-			<!-- Surefire plugin -->
+			<!-- Surefire plugin for running tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -79,7 +86,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Source jar -->
+			<!-- Source jar creation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -94,11 +101,23 @@
 				</executions>
 			</plugin>
 
-			<!-- Javadoc jar -->
+			<!-- Javadoc jar creation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.10.0</version>
+				<configuration>
+					<tags>
+						<tag>
+							<name>example</name>
+							<placement>a</placement>
+							<head>Example:</head>
+						</tag>
+					</tags>
+					<source>21</source>
+					<detectJavaApiLink>false</detectJavaApiLink>
+					<show>public</show>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
