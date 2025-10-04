@@ -19,15 +19,15 @@ import java.lang.annotation.Target;
  * </p>
  * 
  * <pre>{@code
- * &#64;Service
+ * @Service
  * public class UserService {
  * 
- * 	&#64;MonitorPerformance(slowThreshold = 500, memoryThreshold = 50, logLevel = MonitorPerformance.LogLevel.INFO)
+ * 	@MonitorPerformance(slowThreshold = 500, memoryThreshold = 50, logLevel = MonitorPerformance.LogLevel.INFO)
  * 	public List&lt;User&gt; getUsers() {
  * 		return userRepository.findAll();
  * 	}
  * 
- * 	&#64;MonitorPerformance(trackMemory = false, logExceptions = false)
+ * 	@MonitorPerformance(trackMemory = false, logExceptions = false)
  * 	public User getUserById(Long id) {
  * 		return userRepository.findById(id).orElse(null);
  * 	}

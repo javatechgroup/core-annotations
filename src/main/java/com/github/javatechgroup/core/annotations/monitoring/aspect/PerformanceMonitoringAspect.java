@@ -41,15 +41,15 @@ import com.github.javatechgroup.core.annotations.monitoring.MonitorPerformance;
  * </p>
  * 
  * <pre>{@code
- * &#64;Service
+ * @Service
  * public class UserService {
  * 
- * 	&#64;MonitorPerformance(slowThreshold = 100, memoryThreshold = 10)
+ * 	@MonitorPerformance(slowThreshold = 100, memoryThreshold = 10)
  * 	public User findUser(String userId) {
  * 		// Method implementation
  * 	}
  * 
- * 	&#64;MonitorPerformance(trackExceptions = false, logLevel = MonitorPerformance.LogLevel.DEBUG)
+ * 	@MonitorPerformance(trackExceptions = false, logLevel = MonitorPerformance.LogLevel.DEBUG)
  * 	public void quickOperation() {
  * 		// Fast operation that doesn't need exception logging
  * 	}
