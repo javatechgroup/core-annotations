@@ -40,29 +40,26 @@ import java.lang.reflect.Field;
  * 
  * <h2>Common Integration Patterns</h2>
  * 
- * <pre>
- * {
- * 	&#64;code
+ * <pre>{@code
  * // Pattern 1: Trim in service methods
- * 	&#64;Service
- * 	public class UserService {
- * 		public UserDTO createUser(UserDTO user) {
- * 			StringTrimmer.trim(user); // Explicit trim call
- * 			// ... business logic
- * 		}
- * 	}
+ * @Service
+ * public class UserService {
+ *     public UserDTO createUser(UserDTO user) {
+ *         StringTrimmer.trim(user); // Explicit trim call
+ *         // ... business logic
+ *     }
+ * }
  * 
  * // Pattern 2: Trim in controller methods  
- * 	@RestController
- * 	public class UserController {
- * 		&#64;PostMapping("/users")
- * 		public UserDTO createUser(@RequestBody UserDTO user) {
- * 			StringTrimmer.trim(user); // Explicit trim call
- * 			return userService.save(user);
- * 		}
- * 	}
+ * @RestController
+ * public class UserController {
+ *     @PostMapping("/users")
+ *     public UserDTO createUser(@RequestBody UserDTO user) {
+ *         StringTrimmer.trim(user); // Explicit trim call
+ *         return userService.save(user);
+ *     }
  * }
- * </pre>
+ * }</pre>
  * 
  * @see com.github.javatechgroup.core.annotations.trim.TrimAllStrings
  * @see com.github.javatechgroup.core.annotations.trim.Trimmed

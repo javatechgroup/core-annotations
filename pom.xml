@@ -21,6 +21,7 @@
 		<spring-boot.version>3.5.6</spring-boot.version>
 		<lombok.version>1.18.42</lombok.version>
 		<slf4j.version>2.0.17</slf4j.version>
+		<jsoup.version>1.21.2</jsoup.version>
 	</properties>
 
 	<dependencies>
@@ -39,7 +40,11 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 			<version>${spring-boot.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -57,6 +62,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<version>${spring-boot.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -127,6 +136,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<skip>true</skip> <!-- ADD THIS LINE TO FIX THE BUILD -->
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -138,4 +159,23 @@
 		</repository>
 	</distributionManagement>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.6</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<url />
+	<licenses>
+		<license />
+	</licenses>
+	<developers>
+		<developer />
+	</developers>
+	<scm>
+		<connection />
+		<developerConnection />
+		<tag />
+		<url />
+	</scm>
 </project>
