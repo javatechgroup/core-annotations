@@ -32,13 +32,13 @@ import java.lang.annotation.*;
  * {@code
  * // Field-level sanitization
  * public class User {
- *     &#64;SanitizeInput
+ *     @SanitizeInput
  *     private String bio; // HTML in bio will be sanitized automatically
  *     
- *     &#64;SanitizeInput(strategy = Strategy.NONE)
+ *     @SanitizeInput(strategy = Strategy.NONE)
  *     private String comment; // All HTML tags will be removed
  *     
- *     &#64;SanitizeInput(strategy = Strategy.RELAXED, recursive = false)
+ *     @SanitizeInput(strategy = Strategy.RELAXED, recursive = false)
  *     private Profile profile; // Relaxed sanitization, no recursion into Profile
  * }
  *
@@ -111,7 +111,7 @@ public @interface SanitizeInput {
 	 *         <pre>
 	 *         {@code
 	 * public class BlogPost {
-	  *     &#64;SanitizeInput(recursive = true)
+	  *     @SanitizeInput(recursive = true)
 	  *     private Author author; // Will sanitize Author's @SanitizeInput fields
 	  * 
 	  *     @SanitizeInput(recursive = false)

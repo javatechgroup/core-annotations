@@ -248,9 +248,9 @@ public class SanitizeInputAspect {
 	 * 
 	 *          <pre>
 	 *          {
-	 *          	&#64;code
+	 *          	@code
 	 *          	public class User {
-	 *          		&#64;SanitizeInput
+	 *          		@SanitizeInput
 	 *          		private String bio; // Will be sanitized
 	 *          		private Profile profile; // Will be recursively processed
 	 *          	}
